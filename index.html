@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayfarely — trips planned to the budget you actually set</title>
+<meta name="description" content="Wayfarely builds day-by-day travel itineraries that stay within the budget you set, with real costs for flights, lodging, food and activities.">
+<meta property="og:title" content="Wayfarely">
+<meta property="og:description" content="Day-by-day travel itineraries that stay within the budget you actually set.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wayfarely.app">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+  :root {
+    --paper:    #EDEFEA;
+    --surface:  #F7F8F4;
+    --ink:      #16302B;
+    --ink-soft: #3F5B54;
+    --muted:    #6E837C;
+    --rule:     #CFD6CD;
+    --accent:   #C2582B;
+    --sage:     #7C8D79;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:    #0E1D1A;
+      --surface:  #16302B;
+      --ink:      #E8EDE7;
+      --ink-soft: #B4C4BE;
+      --muted:    #859A93;
+      --rule:     #2C4740;
+      --accent:   #E8834F;
+      --sage:     #9BAE97;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:    #0E1D1A;
+    --surface:  #16302B;
+    --ink:      #E8EDE7;
+    --ink-soft: #B4C4BE;
+    --muted:    #859A93;
+    --rule:     #2C4740;
+    --accent:   #E8834F;
+    --sage:     #9BAE97;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 28px; }
+
+  /* --- masthead --- */
+  header.top {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 30px 0 0;
+  }
+  .mark {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 27px; letter-spacing: .01em;
+  }
+  .mark em { font-style: italic; color: var(--accent); }
+  .top .status {
+    margin-left: auto; font-size: 13px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* --- hero --- */
+  .hero { padding: 74px 0 66px; border-bottom: 1px solid var(--rule); }
+  h1 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(42px, 7vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -.005em;
+    margin: 0 0 22px;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede {
+    font-size: clamp(18px, 2.2vw, 21px);
+    line-height: 1.5; color: var(--ink-soft);
+    max-width: 54ch; margin: 0;
+  }
+
+  /* --- the claim --- */
+  .claim {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 26px;
+    margin-top: 40px; padding: 22px 26px;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 3px;
+  }
+  .claim .figure {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 44px; line-height: 1; color: var(--accent);
+  }
+  .claim p { margin: 0; max-width: 46ch; color: var(--ink-soft); font-size: 16px; }
+
+  /* --- sections --- */
+  section { padding: 62px 0; border-bottom: 1px solid var(--rule); }
+  h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400; font-size: 34px; line-height: 1.15;
+    margin: 0 0 10px; text-wrap: balance;
+  }
+  .sub { color: var(--muted); margin: 0 0 34px; max-width: 56ch; }
+
+  .steps { display: grid; gap: 30px; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+  .step .n {
+    font-size: 13px; letter-spacing: .1em; color: var(--accent);
+    display: block; margin-bottom: 9px; font-weight: 600;
+  }
+  .step h3 { font-size: 18px; margin: 0 0 7px; font-weight: 600; }
+  .step p { margin: 0; color: var(--ink-soft); font-size: 15.5px; }
+
+  /* --- tiers --- */
+  .tiers { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .tiers { grid-template-columns: 1fr; } }
+  .tier {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 3px; padding: 26px 24px;
+  }
+  .tier.paid { border-color: var(--accent); }
+  .tier h3 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400; font-size: 25px; margin: 0 0 3px;
+  }
+  .tier .time {
+    font-size: 13px; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); display: block; margin-bottom: 14px;
+  }
+  .tier ul { margin: 0; padding-left: 17px; color: var(--ink-soft); font-size: 15.5px; }
+  .tier li { margin-bottom: 6px; }
+
+  /* --- footer --- */
+  footer { padding: 46px 0 66px; font-size: 14.5px; color: var(--muted); }
+  footer .entity { color: var(--ink-soft); font-weight: 500; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer .row { display: flex; flex-wrap: wrap; gap: 8px 30px; margin-bottom: 12px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark">Way<em>farely</em></div>
+    <div class="status">In development</div>
+  </header>
+
+  <div class="hero">
+    <h1>Trips planned to the budget you <em>actually</em> set.</h1>
+    <p class="lede">Tell Wayfarely where you're going, when, and what you can spend. It returns a
+      day-by-day itinerary with real costs — flights, lodging, meals, activities — that adds up to
+      the number you gave it.</p>
+
+    <div class="claim">
+      <span class="figure">&plusmn;5%</span>
+      <p>Every itinerary is built to land within five percent of your stated budget, with the
+        arithmetic shown by category rather than hidden behind an estimate.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>How it works</h2>
+    <p class="sub">Three inputs, one itinerary. No account juggling, no twelve tabs of price
+      comparison.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01</span>
+        <h3>Describe the trip</h3>
+        <p>Departure city, one destination or several, your dates, group size, and a total budget.
+          Interests and pace, if you have opinions about them.</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <h3>Wayfarely plans it</h3>
+        <p>Days are laid out with timed activities, places to eat, transport between them, and where
+          to stay — each with a cost attached.</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <h3>Take it with you</h3>
+        <p>Read it on your phone, export it as a PDF, or keep several versions of a trip side by
+          side before you commit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Two ways to plan</h2>
+    <p class="sub">Longer, multi-city trips take more research — so they're priced by how much
+      planning they actually need, not a flat fee.</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Quick</h3>
+        <span class="time">Under a minute</span>
+        <ul>
+          <li>A complete day-by-day itinerary</li>
+          <li>Costs broken down by category</li>
+          <li>Named places, not vague suggestions</li>
+          <li>First one free on every account</li>
+        </ul>
+      </div>
+      <div class="tier paid">
+        <h3>Thorough</h3>
+        <span class="time">A few minutes &middot; we'll tell you when it's ready</span>
+        <ul>
+          <li>Deeper research into each day</li>
+          <li>Itemised admission and transport prices</li>
+          <li>Built for long and multi-city trips</li>
+          <li>Bought in credits, priced by trip size</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Coming to iPhone and Android</h2>
+    <p class="sub">Wayfarely is in active development. If you'd like to hear when it launches, or
+      you're interested in early access, write to us — a person reads it.</p>
+    <p style="margin:0"><a href="mailto:hello@wayfarely.app"
+      style="color:var(--accent);font-size:19px;text-decoration:none">hello@wayfarely.app</a></p>
+  </section>
+
+  <footer>
+    <div class="row">
+      <span class="entity">ALEBETH HOLDINGS LLC</span>
+      <span>wayfarely.app</span>
+      <span><a href="mailto:hello@wayfarely.app">hello@wayfarely.app</a></span>
+    </div>
+    <div>&copy; 2026 ALEBETH HOLDINGS LLC. All rights reserved.</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
